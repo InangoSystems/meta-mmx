@@ -78,8 +78,16 @@ PR = "r0"
 inherit packagegroup
 
 RDEPENDS_${PN} = "\
-	ubus \
+	libmmx-frontapi \
+	libmmx-backapi \
+	luaxml \
+	libmicroxml \
 	mmx-ep \
 	mmx-cli \
-	libubox \
+	mmx-web \
+	luci \
+	uhttpd \
+	ubus \
+	rpcd \
+	procd-base-files \
 	"
