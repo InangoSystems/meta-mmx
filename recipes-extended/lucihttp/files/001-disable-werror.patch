@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8b762c4..57dfc98 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,7 +5,7 @@ PROJECT(liblucihttp C)
+ OPTION(BUILD_LUA "build Lua binding" ON)
+ OPTION(BUILD_TESTS "build test programs" ON)
+ 
+-ADD_DEFINITIONS(-Os -ggdb -Wall -Werror --std=gnu99 -Wmissing-declarations -Wno-format-truncation)
++ADD_DEFINITIONS(-Os -ggdb -Wall --std=gnu99 -Wmissing-declarations -Wno-format-truncation)
+ 
+ SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+ 
