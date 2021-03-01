@@ -76,8 +76,11 @@ SECTION = "libs"
 DEPENDS = "lua5.1 libxml2"
 
 PV = "101012"
-SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https"
-SRCREV = "76ff8a97e86c6833788dabd588721696402f1a86"
+# FIXME: rollback to master branch after merge
+SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https;branch=n1-mmx-on-rdkb"
+SRCREV = "f243ab9d1857b7579f13e02c2a5734d5b53ead73"
+#SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https"
+#SRCREV = "76ff8a97e86c6833788dabd588721696402f1a86"
 
 S = "${WORKDIR}/git"
 
@@ -95,8 +98,10 @@ do_compile_class-native() {
     oe_runmake STAGING_DIR=${STAGING_DIR_NATIVE}
 }
 
-FILES_${PN} += "${libdir}/lua"
+LUAPATH ?= "${libdir}/lua/5.1"
+
+FILES_${PN} += "${LUAPATH}"
 
 do_install() {
-    oe_runmake install DESTDIR=${D}
+    oe_runmake install DESTDIR=${D} LUAPATH=${LUAPATH}
 }
