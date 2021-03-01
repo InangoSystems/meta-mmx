@@ -89,8 +89,28 @@ repo sync -j$(nproc) --no-clone-bundle
 Fetch MMX related meta layers
 ```bash
 git clone https://github.com/kraj/meta-openwrt.git
+(cd meta-openwrt && git checkout 8735d93b92c740d727551c2f7cc5865a2e72e1a8) 
 
 git clone https://github.com/InangoSystems/meta-mmx.git
+```
+
+Fetch meta layer with customer package, i.e. [meta-prplmesh](https://gitlab.com/prpl-foundation/prplmesh/meta-prplmesh)
+See details inside README.md of that repo
+
+Apply next patch in meta-openwrt layer to allow use it in Dunfell
+(that's my mistake - i missed existence "dunfell" branch in "meta-openwrt"
+ migration will be done in separate task)
+```diff
+diff --git a/conf/layer.conf b/conf/layer.conf
+index d60552b..b4b8932 100644
+--- a/conf/layer.conf
++++ b/conf/layer.conf
+@@ -10,5 +10,5 @@ BBFILE_PRIORITY_openwrt-layer = "8"
+ 
+  LAYERDEPENDS_openwrt-layer = "core openembedded-layer networking-layer"
+   
+   -LAYERSERIES_COMPAT_openwrt-layer = "gatesgarth hardknott"
+   +LAYERSERIES_COMPAT_openwrt-layer = "gatesgarth hardknott dunfell"
 ```
 
 Source environment for RPi 3B/3B+
@@ -104,18 +124,49 @@ BBLAYERS =+ "${RDKROOT}/meta-openwrt"
 BBLAYERS =+ "${RDKROOT}/meta-mmx"
 ```
 
-Add into `conf/local.conf`
-```
-PREFERRED_VERSION_libubox = "git"
-PREFERRED_VERSION_ubus = "git"
-
-# meta-openwrt patch on busybox is outdated
-BBMASK_append += "|meta-openwrt/recipes-tweaks/busybox/busybox_%.bbappend"
-
-IMAGE_INSTALL_append = " packagegroup-mmx"
-```
-
 Build image
 ```bash
 bitbake rdk-generic-broadband-image
 ```
+
+## HOWTO run
+
+Check that U-Bus daemon run
+```bash
+ps aux | grep ubusd
+```
+
+```bash
+rpcd -s /var/run/ubus/ubus.sock -t 30 &
+```
+
+Run uci-default script
+```bash
+/etc/uci-defaults/mmx-web.init
+```
+
+```bash
+/etc/rc.common /etc/init.d/mmxep_init start
+
+# check that process "mmx-ep" is running
+ps aux | grep mmx
+```
+
+```bash
+mmx-cli
+> mmx prplmesh network show
+```
+
+Run uhttpd
+```bash
+# use full cmdline because "procd" is not in image
+/usr/sbin/uhttpd -f -h /www -r OpenWrt -x /cgi-bin -l /cgi-bin/luci -L /usr/lib/lua/5.1/luci/sgi/uhttpd.lua -t 60 -T 30 -k 20 -A 1 -n 3 -N 100 -R -p 0.0.0.0:2080 -p [::]:2080 &
+```
+
+Grand access to MMX WebUI from outside
+```bash
+iptables -I INPUT -m tcp -p tcp --dport 2080 -j ACCEPT
+```
+
+Open MMX WebUI: http://erouter_ip_address:2080/
+
