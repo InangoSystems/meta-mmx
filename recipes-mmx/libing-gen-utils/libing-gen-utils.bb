@@ -81,12 +81,12 @@ PV = "${PKG_MAJOR_VERSION}.0.1"
 # FIXME: set master branch after merge PR in library repo
 #SRC_URI = "git://github.com/InangoSystems/libing-gen-utils.git;protocol=https"
 #SRCREV = "02c3d37974222f770ad85d1e8d210eaa531ffa2b"
-SRC_URI = "git://github.com/InangoSystems/libing-gen-utils.git;branch=hotfix/add-soname;protocol=https"
-SRCREV = "4c9be2e35986dcbad24d720d0500fc21f8ccfa75"
+SRC_URI = "git://github.com/InangoSystems/libing-gen-utils.git;protocol=https;branch=n1-mmx-on-rdkb"
+SRCREV = "fdcc6269dd2bc49f14ba0a67895038757b837498"
 
 S = "${WORKDIR}/git"
 
-CFLAGS += "-I${STAGING_INCDIR}/lua5.1"
+TARGET_CFLAGS += "-I${STAGING_INCDIR}/lua5.1"
 
 # To have GNU_HASH in shared library
 TARGET_CC_ARCH += "${LDFLAGS}"
@@ -95,10 +95,11 @@ do_compile() {
     oe_runmake
 }
 
-FILES_${PN} += "/usr/lib/lua/mmx"
+LUAPATH ?= "${libdir}/lua/5.1"
+FILES_${PN} += "${LUAPATH}/mmx"
 
 do_install() {
-    oe_runmake install DESTDIR=${D}
+    oe_runmake install DESTDIR=${D} LUAPATH=${LUAPATH}
 
     (cd ${D}/usr/lib && mv ${PN}.so ${PN}.so.${PV})
     (cd ${D}/usr/lib && ln -sf ${PN}.so.${PV} ${PN}.so)
