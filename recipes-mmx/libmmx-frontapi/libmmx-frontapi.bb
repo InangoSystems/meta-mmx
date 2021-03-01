@@ -81,8 +81,8 @@ PV = "${PKG_MAJOR_VERSION}.0.1"
 # FIXME: set master branch after merge PR in library repo
 #SRC_URI = "git://github.com/InangoSystems/libmmx-frontapi.git;protocol=https"
 #SRCREV = "41dcad7bd830b53695e96d036d66644ce6304235"
-SRC_URI = "git://github.com/InangoSystems/libmmx-frontapi.git;branch=hotfix/add-soname;protocol=https"
-SRCREV = "27e664e5eca27a68b85e5b5e76aa008e71371c39"
+SRC_URI = "git://github.com/InangoSystems/libmmx-frontapi.git;protocol=https;branch=n1-mmx-on-rdkb"
+SRCREV = "7c606567f437e4a8c9559567f4b410d89b922815"
 
 S = "${WORKDIR}/git"
 
@@ -93,10 +93,11 @@ do_compile() {
     oe_runmake
 }
 
-FILES_${PN} += "/usr/lib/lua/mmx"
+LUAPATH ?= "${libdir}/lua/5.1"
+FILES_${PN} += "${LUAPATH}/mmx"
 
 do_install() {
-    oe_runmake install DESTDIR=${D}
+    oe_runmake install DESTDIR=${D} LUAPATH=${LUAPATH}
 
     (cd ${D}/usr/lib && mv ${PN}.so ${PN}.so.${PV})
     (cd ${D}/usr/lib && ln -sf ${PN}.so.${PV} ${PN}.so)
