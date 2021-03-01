@@ -1,0 +1,24 @@
+--- a/files/etc/uci-defaults/mmx-web.init 2021-03-01 15:55:06.948726699 +0500
++++ b/files/etc/uci-defaults/mmx-web.init 2021-03-01 16:01:18.597826793 +0500
+@@ -93,4 +93,21 @@
+ uci del_list luci.main.lua_prefix='/cgi-bin/luci=/usr/lib/lua/luci/sgi/uhttpd.lua'
+ uci add_list luci.main.lua_prefix='/cgi-bin/luci=/usr/lib/lua/5.1/luci/sgi/uhttpd.lua'
+ 
++# change uhttpd listen port to avoid conflict with lighttpd daemon
++uci del_list uhttpd.main.listen_http='0.0.0.0:80'
++uci del_list uhttpd.main.listen_http='[::]:80'
++uci del_list uhttpd.main.listen_http='0.0.0.0:2080'
++uci del_list uhttpd.main.listen_http='[::]:2080'
++
++uci add_list uhttpd.main.listen_http='0.0.0.0:2080'
++uci add_list uhttpd.main.listen_http='[::]:2080'
++
++uci del_list uhttpd.main.listen_https='0.0.0.0:443'
++uci del_list uhttpd.main.listen_https='[::]:443'
++uci del_list uhttpd.main.listen_https='0.0.0.0:2443'
++uci del_list uhttpd.main.listen_https='[::]:2443'
++
++uci add_list uhttpd.main.listen_https='0.0.0.0:2443'
++uci add_list uhttpd.main.listen_https='[::]:2443'
++
+ uci commit

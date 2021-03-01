@@ -67,6 +67,7 @@
 # - professional sub-contract and customization services
 #
 ################################################################################
+FILEEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 DESCRIPTION = "MMX WEB"
 HOMEPAGE = "https://github.com/InangoSystems/feed-mmx"
@@ -77,10 +78,18 @@ DEPENDS = ""
 RDEPENDS_${PN} += "lua5.1 luci uhttpd ubus rpcd procd-base-files"
 
 PV = "2.0.1"
-SRC_URI = "\
-    git://github.com/InangoSystems/feed-mmx.git;protocol=https \
-"
-SRCREV = "5172c6f7719cb5988f2722442238f400245fb564"
+# FIXME: return to master branch after merge PR
+#SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https"
+#SRCREV = "5172c6f7719cb5988f2722442238f400245fb564"
+SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=n40-mmx-on-rdkb"
+SRCREV = "d85c535323cd06a2f6b20acac9128509fd3eede3"
+
+SRC_URI += "\
+    file://001-mmx-web-luapath.patch \
+    file://002-mmx-web-luci-template-viewdir.patch \
+    file://003-fix-uhttpd-luci-location.patch \
+    file://004-set-uhttpd-listen-ports-2080-and-2443.patch \
+    "
 
 S = "${WORKDIR}/git/mng/mmx-web"
 
@@ -89,39 +98,44 @@ FILES_${PN} += "\
     /usr \
     "
 
+LUAPATH ?= "${libdir}/lua/5.1"
+
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
 do_install() {
-	install -d ${D}${libdir}/lua/luci/mmx
-	install -m 0755 ./src/mmx_web_routines.lua ${D}${libdir}/lua/luci/mmx/mmx_web_routines.lua
+	install -d ${D}${LUAPATH}/luci/mmx
+	install -m 0755 ${S}/src/mmx_web_routines.lua ${D}${LUAPATH}/luci/mmx/mmx_web_routines.lua
 
-	install -d ${D}${libdir}/lua/luci/controller
-	install -m 0755 ./src/mmx-controller.lua ${D}${libdir}/lua/luci/controller/mmx.lua
+	install -d ${D}${LUAPATH}/luci/controller
+	install -m 0755 ${S}/src/mmx-controller.lua ${D}${LUAPATH}/luci/controller/mmx.lua
 
 #ifeq ($(CONFIG_PACKAGE_mmx-user-be),y)
-#	install -d ${D}${libdir}/lua/luci/view
-#	install -m 0755 ${S}/files/sysauth.htm ${D}${libdir}/lua/luci/view/sysauth.htm
+#	install -d ${D}${LUAPATH}/luci/view
+#	install -m 0755 ${S}/files/sysauth.htm ${D}${LUAPATH}/luci/view/sysauth.htm
 #endif
 
-	install -d ${D}${libdir}/lua/mmx
+	install -d ${D}${LUAPATH}/mmx
 #ifeq ($(CONFIG_PACKAGE_mmx-user-be),y)
 #	# patched controller/admin/index.lua to allow Luci login for MMX added users
-#	install -m 0755 ./src/mmx_admin_index.lua ${D}${libdir}/lua/mmx
+#	install -m 0755 ./src/mmx_admin_index.lua ${D}${LUAPATH}/mmx
 #endif
 
-	#patched network.lua to ignore tap interfaces
-	install -m 0755 ./luci/mmx-model-network.lua ${D}${libdir}/lua/mmx
+	# patched network.lua to ignore tap interfaces
+	install -m 0755 ${S}/luci/mmx-model-network.lua ${D}${LUAPATH}/mmx
+
+        # patched to allow page with "call" action
+        install -m 0755 ${S}/luci/dispatcher.lua ${D}${LUAPATH}/mmx
 
 	install -d ${D}/etc/uci-defaults
 	install -m 0755 ${S}/files/etc/uci-defaults/mmx-web.init ${D}/etc/uci-defaults
 
-	install -d ${D}${libdir}/lua/luci/view/mmx
-	install -m 0755 ${S}/files/view-mmx.htm ${D}${libdir}/lua/luci/view/mmx/mmx.htm
-	install -m 0755 ${S}/files/view-mmx-vector.htm ${D}${libdir}/lua/luci/view/mmx/mmx-vector.htm
-	install -m 0755 ${S}/files/view-mmx-matrix.htm ${D}${libdir}/lua/luci/view/mmx/mmx-matrix.htm
-	install -m 0755 ${S}/files/view-mmx-tablegroup.htm ${D}${libdir}/lua/luci/view/mmx/mmx-tablegroup.htm
-	install -m 0755 ${S}/files/view-mmx-field.htm ${D}${libdir}/lua/luci/view/mmx/mmx-field.htm
+	install -d ${D}${LUAPATH}/luci/view/mmx
+	install -m 0755 ${S}/files/view-mmx.htm ${D}${LUAPATH}/luci/view/mmx/mmx.htm
+	install -m 0755 ${S}/files/view-mmx-vector.htm ${D}${LUAPATH}/luci/view/mmx/mmx-vector.htm
+	install -m 0755 ${S}/files/view-mmx-matrix.htm ${D}${LUAPATH}/luci/view/mmx/mmx-matrix.htm
+	install -m 0755 ${S}/files/view-mmx-tablegroup.htm ${D}${LUAPATH}/luci/view/mmx/mmx-tablegroup.htm
+	install -m 0755 ${S}/files/view-mmx-field.htm ${D}${LUAPATH}/luci/view/mmx/mmx-field.htm
 
 	install -d ${D}/www/luci-static/resources/
 	install -m 0755 ${S}/files/mmx.js ${D}/www/luci-static/resources/mmx.js
