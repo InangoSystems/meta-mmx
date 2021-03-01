@@ -81,13 +81,18 @@ SRCREV = "76ff8a97e86c6833788dabd588721696402f1a86"
 
 S = "${WORKDIR}/git"
 
-CFLAGS += "-I${STAGING_INCDIR}/lua5.1"
+TARGET_CFLAGS += "-I${STAGING_INCDIR}/lua5.1"
 
 # To have GNU_HASH in shared library
 TARGET_CC_ARCH += "${LDFLAGS}"
 
-do_compile() {
-    oe_runmake
+# define STAGING_DIR to avoid using host paths during compilation
+do_compile_class-target() {
+    oe_runmake STAGING_DIR=${STAGING_DIR_TARGET}
+}
+
+do_compile_class-native() {
+    oe_runmake STAGING_DIR=${STAGING_DIR_NATIVE}
 }
 
 FILES_${PN} += "${libdir}/lua"
