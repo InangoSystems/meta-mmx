@@ -69,10 +69,10 @@
 ################################################################################
 
 DESCRIPTION = "Lua bindings for LibXML"
-HOMEPAGE = ""
-# FIXME: set correct license
-LICENSE = "CLOSED"
-SECTION = "libx"
+HOMEPAGE = "https://github.com/InangoSystems/luaxml/tree/master/src/LuaXML_101012"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://src/LuaXML_${PV}/readme.txt;beginline=123;endline=147;md5=f6be034ee457e4bcacf6663009d3276f"
+SECTION = "libs"
 DEPENDS = "lua5.1 libxml2"
 
 PV = "101012"
