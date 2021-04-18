@@ -1,6 +1,6 @@
 ################################################################################
 #
-# procd-base-files_git.bb
+# rpcd_git.bbappend
 #
 # Copyright (c) 2013-2021 Inango Systems LTD.
 #
@@ -69,40 +69,18 @@
 ################################################################################
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-SUMMARY = "Scripts from procd (OpenWrt process management daemon)"
-DESCRIPTION = "Some scripts, i.e. rc.common, is needed to autostart OpenWrt services on RDKB"
-HOMEPAGE = "http://wiki.openwrt.org/doc/techref/procd"
-LICENSE = "BSD"
-LIC_FILES_CHKSUM = "file://procd.c;beginline=1;endline=13;md5=61e3657604f131a859b57a40f27a9d8e"
-SECTION = "base"
-DEPENDS = "libubox ubus json-c"
+RDEPENDS_${PN}_append_rdk += " ubus"
 
-SRC_URI = "git://git.openwrt.org/project/procd.git"
-SRCREV = "6acc48c7a2faac48c534b8a5516500c270550a9e"
+inherit ${@d.getVar('DISTRO', True) == 'rdk' and 'systemd' or 'base'}
 
-S = "${WORKDIR}/git"
-PD = "${S}/openwrt/package/system/procd/files"
-BF = "${S}/openwrt/package/base-files/files"
+SRC_URI_append_rdk += " file://rpcd.service"
 
-SRCREV_openwrt = "${OPENWRT_SRCREV}"
+SYSTEMD_SERVICE_${PN}_rdk = "rpcd.service"
 
-inherit openwrt pkgconfig openwrt-base-files
-
-do_compile[noexec] = "1"
-
-do_install() {
-    install -d ${D}${sysconfdir}
-    install -m 0755 ${BF}/etc/rc.common ${D}${sysconfdir}/rc.common
-
-    install -d ${D}${base_libdir}/functions
-    install -m 0644 ${BF}/lib/functions/service.sh ${D}${base_libdir}/functions/service.sh
-
-    install -dm 0755 ${D}${sysconfdir}/rc.d
+do_install_append_rdk() {
+    # Install systemd unit files
+    install -d ${D}${systemd_unitdir}/system
+    install -m 0644 ${WORKDIR}/rpcd.service ${D}${systemd_unitdir}/system
+        sed -i -e 's,@SBINDIR@,${sbindir},g' \
+            ${D}${systemd_unitdir}/system/rpcd.service
 }
-
-RDEPENDS_${PN} += "base-files-scripts-openwrt"
-
-FILES_${PN} += "\
-    ${base_libdir} \
-    ${sysconfdir} \
-"

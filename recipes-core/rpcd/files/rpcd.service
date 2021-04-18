@@ -1,0 +1,13 @@
+[Unit]
+Description=RPC daemon
+After=local-fs.target ubusd.service
+Requires=local-fs.target ubusd.service
+
+[Service]
+ExecStart=/bin/sh -c '@SBINDIR@/rpcd -s /var/run/ubus/ubus.sock -t 30 &'
+Type=forking
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

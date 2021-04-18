@@ -136,8 +136,9 @@ Check that U-Bus daemon run
 ps aux | grep ubusd
 ```
 
+Check that rpcd daemon run
 ```bash
-rpcd -s /var/run/ubus/ubus.sock -t 30 &
+ps aux | grep rpcd
 ```
 
 Run uci-default script
