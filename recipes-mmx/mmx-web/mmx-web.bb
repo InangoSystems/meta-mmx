@@ -89,14 +89,14 @@ SRC_URI += "\
     file://002-mmx-web-luci-template-viewdir.patch \
     file://003-fix-uhttpd-luci-location.patch \
     file://004-set-uhttpd-listen-ports-2080-and-2443.patch \
-    "
+"
 
 S = "${WORKDIR}/git/mng/mmx-web"
 
 FILES_${PN} += "\
     /www \
     /usr \
-    "
+"
 
 LUAPATH ?= "${libdir}/lua/5.1"
 

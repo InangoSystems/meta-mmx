@@ -83,7 +83,7 @@ PKG_MAJOR_VERSION = "0"
 SRC_URI = "\
     git://github.com/jow-/lucihttp.git;protocol=https \
     file://001-disable-werror.patch \
-    "
+"
 SRCREV = "a34a17d501c0e23f0a91dd9d3e87697347c861ba"
 
 S = "${WORKDIR}/git"
