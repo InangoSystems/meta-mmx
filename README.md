@@ -164,7 +164,7 @@ Run uhttpd
 /usr/sbin/uhttpd -f -h /www -r OpenWrt -x /cgi-bin -l /cgi-bin/luci -L /usr/lib/lua/5.1/luci/sgi/uhttpd.lua -t 60 -T 30 -k 20 -A 1 -n 3 -N 100 -R -p 0.0.0.0:2080 -p [::]:2080 &
 ```
 
-Grand access to MMX WebUI from outside
+Grant access to MMX WebUI from outside
 ```bash
 iptables -I INPUT -m tcp -p tcp --dport 2080 -j ACCEPT
 ```
