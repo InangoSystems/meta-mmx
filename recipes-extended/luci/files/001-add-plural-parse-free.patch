@@ -1,8 +1,6 @@
-diff --git a/modules/luci-base/CMakeLists.txt b/modules/luci-base/CMakeLists.txt
-index f525cd49e..8e9719a10 100644
 --- a/modules/luci-base/CMakeLists.txt
 +++ b/modules/luci-base/CMakeLists.txt
-@@ -5,14 +5,14 @@ PROJECT(luci-base C)
+@@ -5,15 +5,15 @@
  ADD_CUSTOM_COMMAND(OUTPUT lemon
  		   COMMAND gcc -o ${CMAKE_BINARY_DIR}/lemon ${PROJECT_SOURCE_DIR}/src/contrib/lemon.c)
  
@@ -17,17 +15,9 @@ index f525cd49e..8e9719a10 100644
 +#		   DEPENDS lemon plural_formula
 +#)
  
--ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c)
-+ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c src/plural_formula.c)
- SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
- 
- INSTALL(DIRECTORY luasrc/
-@@ -24,7 +24,7 @@ INSTALL(TARGETS parser
- 	LIBRARY DESTINATION "${LUAPATH}/luci/template"
- )
- 
+ ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c src/plural_formula.c)
 -add_dependencies(parser generate_plural_formula)
 +#add_dependencies(parser generate_plural_formula)
+ SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
  
- INSTALL(DIRECTORY root/
- 	DESTINATION "${CMAKE_INSTALL_PREFIX}/"
+ INSTALL(TARGETS parser

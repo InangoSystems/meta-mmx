@@ -1,6 +1,6 @@
 ################################################################################
 #
-# luci_git.bb
+# luci_git.bbappend
 #
 # Copyright (c) 2013-2021 Inango Systems LTD.
 #
@@ -69,7 +69,7 @@
 ################################################################################
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-RDEPENDS_${PN} += "lucihttp"
+RDEPENDS_${PN} += "liblucihttp"
 
 LUAPATH ?= "${libdir}/lua/5.1"
 
@@ -81,7 +81,7 @@ SRC_URI += "file://001-add-plural-parse-free.patch"
 
 do_install_append() {
     install_luci_mod_network
-    install_luci_lib_base
+    install_luci_mod_base
 }
 
 SLMD = "${S}/modules/luci-mod-network"
@@ -95,9 +95,10 @@ install_luci_mod_network() {
     chown root:root -R ${D}
 }
 
-SLLB = "${S}/libs/luci-lib-base"
+SLMB = "${S}/modules/luci-base"
 
-install_luci_lib_base() {
-    install -d ${D}/${LUAPATH}/luci
-    install -m 0755 ${SLLB}/luasrc/*.lua ${D}/${LUAPATH}/luci
+install_luci_mod_base() {
+    cp -a ${SLMB}/luasrc/. ${D}/${LUAPATH}/luci
+    find ${D}/${LUAPATH}/luci -type f -name "*.luadoc" -exec rm {} \;
+    chown root:root -R ${D}/${LUAPATH}/luci
 }

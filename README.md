@@ -89,7 +89,7 @@ repo sync -j$(nproc) --no-clone-bundle
 Fetch MMX related meta layers
 ```bash
 git clone https://github.com/kraj/meta-openwrt.git
-(cd meta-openwrt && git checkout 8735d93b92c740d727551c2f7cc5865a2e72e1a8) 
+(cd meta-openwrt && git checkout dunfell) 
 
 git clone https://github.com/InangoSystems/meta-mmx.git
 ```

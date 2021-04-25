@@ -1,11 +1,11 @@
 ################################################################################
 #
-# busybox_%.bbappend
+# liblucihttp_0.1.bbappend
 #
 # Copyright (c) 2013-2021 Inango Systems LTD.
 #
 # Author: Inango Systems LTD. <support@inango-systems.com>
-# Creation Date: 20 Feb 2021
+# Creation Date: 26 Feb 2021
 #
 # The author may be reached at support@inango-systems.com
 #
@@ -67,5 +67,9 @@
 # - professional sub-contract and customization services
 #
 ################################################################################
-SRC_URI_remove_dunfell += "file://220-add_lock_util.patch"
-SRC_URI_remove_dunfell += "file://z300-fix_off_t_misdetection_triggered_without_LFS.patch"
+LUAPATH ?= "${libdir}/lua/5.1"
+
+EXTRA_OECMAKE_remove += "-DBUILD_LUA=off"
+EXTRA_OECMAKE += "-DBUILD_LUA=on -DLUAPATH=${LUAPATH}"
+
+FILES_${PN} += "${LUAPATH}"
