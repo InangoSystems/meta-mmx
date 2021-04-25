@@ -88,6 +88,7 @@ RDEPENDS_${PN} = "\
     luci \
     uhttpd \
     ubus \
+    ubusd \
     rpcd \
     procd-base-files \
 "

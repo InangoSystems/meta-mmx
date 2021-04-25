@@ -83,3 +83,9 @@ do_install_append_rdk() {
             ${D}${systemd_unitdir}/system/ubusd.service
 }
 
+PACKAGES += "\
+    ${PN}d \
+"
+
+FILES_${PN}d += "${sbindir} ${base_sbindir}"
+FILES_${PN}_remove += "/usr/sbin/* /sbin/*"
