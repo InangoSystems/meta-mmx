@@ -73,14 +73,20 @@ HOMEPAGE = "http://klish.libcode.org"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENCE;md5=763c2d89173e7008fab9b7ecf2605ab5"
 SECTION = "utils"
-DEPENDS = "xz-native expat"
+DEPENDS = "expat"
 
-SRC_URI = "http://libcode.org/attachments/download/70/;downloadfilename=klish-${PV}.tar.xz"
-SRC_URI[sha256sum] = "a89dd1027dce713407b6d68e836c8fdead56406dcfc650da84da8e0b92c9b2e5"
+# It's not possible to use sources from tar.xz archive because Yocto 3.1 cannot extract
+# it - print error that "xz" is absent in spite of presence "xz-native" in DEPENDS
+# This issue not occure on secund build run but always presence on clean build
+#SRC_URI = "http://libcode.org/attachments/download/70/;downloadfilename=klish-${PV}.tar.xz"
+
+SRC_URI = "https://src.libcode.org/pkun/klish/archive/${PV}.tar.gz"
+SRC_URI[md5um] = "f840c82061cf9c3604dc9d004332fa3a"
+SRC_URI[sha256sum] = "d2273a6698f3351d963f480a032eb0a20b56e0ee4653c314b5d73079e8183927"
 
 inherit autotools
 
-S = "${WORKDIR}/klish-${PV}"
+S = "${WORKDIR}/klish"
 
 # Add path to plugin file explicitly because Yocto does not add it into package itself
 FILES_${PN} += "/usr/lib/clish_plugin_clish.so"
