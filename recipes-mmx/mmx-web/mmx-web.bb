@@ -127,8 +127,8 @@ do_install() {
         # patched to allow page with "call" action
         install -m 0755 ${S}/luci/dispatcher.lua ${D}${LUAPATH}/mmx
 
-	install -d ${D}/etc/uci-defaults
-	install -m 0755 ${S}/files/etc/uci-defaults/mmx-web.init ${D}/etc/uci-defaults
+	install -d ${D}${sysconfdir}/uci-defaults
+	install -m 0755 ${S}/files/etc/uci-defaults/mmx-web.init ${D}${sysconfdir}/uci-defaults
 
 	install -d ${D}${LUAPATH}/luci/view/mmx
 	install -m 0755 ${S}/files/view-mmx.htm ${D}${LUAPATH}/luci/view/mmx/mmx.htm

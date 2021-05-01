@@ -92,10 +92,10 @@ do_compile[noexec] = "1"
 
 do_install() {
     install -d ${D}${sysconfdir}
-    install -m 0755 ${BF}/etc/rc.common ${D}${sysconfdir}/rc.common
+    install -m 0755 ${BF}${sysconfdir}/rc.common ${D}${sysconfdir}/rc.common
 
     install -d ${D}${base_libdir}/functions
-    install -m 0644 ${BF}/lib/functions/service.sh ${D}${base_libdir}/functions/service.sh
+    install -m 0644 ${BF}${base_libdir}/functions/service.sh ${D}${base_libdir}/functions/service.sh
 
     install -dm 0755 ${D}${sysconfdir}/rc.d
 }

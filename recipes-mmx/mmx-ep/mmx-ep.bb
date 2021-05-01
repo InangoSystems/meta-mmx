@@ -92,7 +92,7 @@ do_compile() {
     oe_runmake
 }
 
-FILES_${PN} += "/usr/lib/lua/mmx"
+FILES_${PN} += "${libdir}/lua/mmx"
 
 do_install() {
     oe_runmake install DESTDIR=${D}
@@ -100,21 +100,21 @@ do_install() {
     install -d ${D}${sbindir}
     install -m 0755 ${S_FEED}/mmxep_env.sh ${D}${sbindir}
 
-    install -d ${D}/etc/init.d
-    install -m 0755 ${S_FEED}/mmx_extinit.sh ${D}/etc/init.d/mmx_extinit
-    install -m 0755 ${S_FEED}/mmxep_init.sh ${D}/etc/init.d/mmxep_init
+    install -d ${D}${sysconfdir}/init.d
+    install -m 0755 ${S_FEED}/mmx_extinit.sh ${D}${sysconfdir}/init.d/mmx_extinit
+    install -m 0755 ${S_FEED}/mmxep_init.sh ${D}${sysconfdir}/init.d/mmxep_init
 
     # use to work without ing-tmp-overlay package
     install -m 0755 ${S_FEED}/mmx_save_cfgfiles.sh ${D}${sbindir}
     install -m 0755 ${S_FEED}/mmx_restore_cfgfiles.sh ${D}${sbindir}
 
-    install -d ${D}/etc/mmx/saved-config
-    install -d ${D}/etc/mmx/saved-db
-    install -d ${D}/etc/mmx/cand-db
+    install -d ${D}${sysconfdir}/mmx/saved-config
+    install -d ${D}${sysconfdir}/mmx/saved-db
+    install -d ${D}${sysconfdir}/mmx/cand-db
 
-    install -d ${D}/usr/lib/lua/mmx
-    install -m 0755 ${S_FEED}/lua/mmx_db_reformat_utils.lua ${D}/usr/lib/lua/mmx/mmx_db_reformat_utils.lua
-    install -m 0755 ${S_FEED}/lua/mmx_db_reformat_perform.lua ${D}/usr/lib/lua/mmx/mmx_db_reformat_perform.lua
-    install -m 0755 ${S_FEED}/lua/mmx_db_get_version.lua ${D}/usr/lib/lua/mmx/mmx_db_reformat_get_version.lua
-    install -m 0755 ${S_FEED}/lua/mmx_db_clear.lua ${D}/usr/lib/lua/mmx/mmx_db_reformat_clear.lua
+    install -d ${D}${libdir}/lua/mmx
+    install -m 0755 ${S_FEED}/lua/mmx_db_reformat_utils.lua ${D}${libdir}/lua/mmx/mmx_db_reformat_utils.lua
+    install -m 0755 ${S_FEED}/lua/mmx_db_reformat_perform.lua ${D}${libdir}/lua/mmx/mmx_db_reformat_perform.lua
+    install -m 0755 ${S_FEED}/lua/mmx_db_get_version.lua ${D}${libdir}/lua/mmx/mmx_db_reformat_get_version.lua
+    install -m 0755 ${S_FEED}/lua/mmx_db_clear.lua ${D}${libdir}/lua/mmx/mmx_db_reformat_clear.lua
 }

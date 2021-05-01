@@ -99,7 +99,7 @@ FILES_${PN} += "${LUAPATH}/mmx"
 do_install() {
     oe_runmake install DESTDIR=${D} LUAPATH=${LUAPATH}
 
-    (cd ${D}/usr/lib && mv ${PN}.so ${PN}.so.${PV})
-    (cd ${D}/usr/lib && ln -sf ${PN}.so.${PV} ${PN}.so)
-    (cd ${D}/usr/lib && ln -sf ${PN}.so.${PV} ${PN}.so.${PKG_MAJOR_VERSION})
+    (cd ${D}${libdir} && mv ${PN}.so ${PN}.so.${PV})
+    (cd ${D}${libdir} && ln -sf ${PN}.so.${PV} ${PN}.so)
+    (cd ${D}${libdir} && ln -sf ${PN}.so.${PV} ${PN}.so.${PKG_MAJOR_VERSION})
 }
