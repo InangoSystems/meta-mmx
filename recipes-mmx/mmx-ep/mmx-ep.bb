@@ -78,11 +78,11 @@ RDEPENDS_${PN} += "lua5.1 libmmx-frontapi libmmx-backapi libing-gen-utils"
 
 PV = "2.0.1"
 SRC_URI = "\
-    git://github.com/InangoSystems/mmx-ep.git;protocol=https;name=src;destsuffix=mmx-ep-${PV} \
-    git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=master;name=feed;subpath=net/mmx-ep/files;destsuffix=feed-mmx-ep-${PV} \
+    git://github.com/InangoSystems/mmx-ep.git;protocol=https;name=src;branch=hotfix/fix-last-index;destsuffix=mmx-ep-${PV} \
+    git://github.com/InangoSystems/feed-mmx.git;protocol=https;name=feed;branch=entrypoint_index_support;subpath=net/mmx-ep/files;destsuffix=feed-mmx-ep-${PV} \
 "
-SRCREV_src = "9db7775ab0d1b97af61e7770f4d4785e9544bfaa"
-SRCREV_feed = "5172c6f7719cb5988f2722442238f400245fb564"
+SRCREV_src = "19197621dc50abb1d52bf03f26f41b850952f800"
+SRCREV_feed = "8db51cda9cb04e5f0ce6e863c735f3cadae0e542"
 
 
 S = "${WORKDIR}/mmx-ep-${PV}"

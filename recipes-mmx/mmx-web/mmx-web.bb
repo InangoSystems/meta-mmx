@@ -78,11 +78,8 @@ DEPENDS = ""
 RDEPENDS_${PN} += "lua5.1 luci uhttpd ubus rpcd procd-base-files"
 
 PV = "2.0.1"
-# FIXME: return to master branch after merge PR
-#SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https"
-#SRCREV = "5172c6f7719cb5988f2722442238f400245fb564"
-SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=n40-mmx-on-rdkb"
-SRCREV = "d85c535323cd06a2f6b20acac9128509fd3eede3"
+SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=entrypoint_index_support"
+SRCREV = "8db51cda9cb04e5f0ce6e863c735f3cadae0e542"
 
 SRC_URI += "\
     file://001-mmx-web-luapath.patch \

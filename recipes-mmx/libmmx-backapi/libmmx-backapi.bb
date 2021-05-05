@@ -78,11 +78,8 @@ DEPENDS = "luaxml lua-socket libmicroxml libing-gen-utils"
 PKG_MAJOR_VERSION = "2"
 PV = "${PKG_MAJOR_VERSION}.0.1"
 
-# FIXME: set master branch after merge PR in library repo
-#SRC_URI = "git://github.com/InangoSystems/libmmx-backapi.git;protocol=https"
-#SRCREV = "f155b2cf39219b2d2505d65ed8cc02e1453c8f44"
-SRC_URI = "git://github.com/InangoSystems/libmmx-backapi.git;branch=hotfix/add-soname;protocol=https"
-SRCREV = "42e9f313b2cecd1102f844331fab78ef215d9a04"
+SRC_URI = "git://github.com/InangoSystems/libmmx-backapi.git;protocol=https"
+SRCREV = "ff355d441904b47ff4f2a6d08c41e415542479e1"
 
 S = "${WORKDIR}/git"
 

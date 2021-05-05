@@ -76,11 +76,8 @@ SECTION = "libs"
 DEPENDS = "lua5.1 libxml2"
 
 PV = "101012"
-# FIXME: rollback to master branch after merge
-SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https;branch=n1-mmx-on-rdkb"
-SRCREV = "f243ab9d1857b7579f13e02c2a5734d5b53ead73"
-#SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https"
-#SRCREV = "76ff8a97e86c6833788dabd588721696402f1a86"
+SRC_URI = "git://github.com/InangoSystems/luaxml.git;protocol=https"
+SRCREV = "f0cc6966beeea0a3ff48d997a77e2e3183e25b58"
 
 S = "${WORKDIR}/git"
 
