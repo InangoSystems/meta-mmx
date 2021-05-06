@@ -1,0 +1,23 @@
+--- a/modules/luci-base/CMakeLists.txt
++++ b/modules/luci-base/CMakeLists.txt
+@@ -5,15 +5,15 @@
+ ADD_CUSTOM_COMMAND(OUTPUT lemon
+ 		   COMMAND gcc -o ${CMAKE_BINARY_DIR}/lemon ${PROJECT_SOURCE_DIR}/src/contrib/lemon.c)
+ 
+-ADD_CUSTOM_COMMAND(OUTPUT plural_formula
++ADD_CUSTOM_COMMAND(OUTPUT ${PROJECT_SOURCE_DIR}/src/plural_formula.c
+ 		   COMMAND cd ${PROJECT_SOURCE_DIR}/src && ${CMAKE_BINARY_DIR}/lemon -q T=${PROJECT_SOURCE_DIR}/src/contrib/lempar.c plural_formula.y && cd -
+ 		   DEPENDS lemon)
+-add_custom_target(generate_plural_formula ALL
+-		   DEPENDS lemon plural_formula
+-)
++#add_custom_target(generate_plural_formula ALL
++#		   DEPENDS lemon plural_formula
++#)
+ 
+ ADD_LIBRARY(parser SHARED src/template_parser.c src/template_utils.c src/template_lmo.c src/template_lualib.c src/plural_formula.c)
+-add_dependencies(parser generate_plural_formula)
++#add_dependencies(parser generate_plural_formula)
+ SET_TARGET_PROPERTIES(parser PROPERTIES PREFIX "")
+ 
+ INSTALL(TARGETS parser

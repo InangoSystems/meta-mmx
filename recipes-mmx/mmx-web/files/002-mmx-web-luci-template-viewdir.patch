@@ -1,0 +1,14 @@
+diff --git a/files/etc/uci-defaults/mmx-web.init b/files/etc/uci-defaults/mmx-web.init
+index bd47123..39fc662 100644
+--- a/files/etc/uci-defaults/mmx-web.init
++++ b/files/etc/uci-defaults/mmx-web.init
+@@ -84,4 +84,9 @@ fi
+ 
+ # disable keepalive in uhttpd server
+ uci set uhttpd.main.http_keepalive='0'
++
++# explicitly set LuCI views root folder
++uci set luci.template=internal
++uci set luci.template.viewdir="/usr/lib/lua/5.1/luci/view/"
++
+ uci commit

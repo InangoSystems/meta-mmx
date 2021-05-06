@@ -1,0 +1,11 @@
+--- a/files/etc/uci-defaults/mmx-web.init 2021-03-01 15:53:22.248416783 +0500
++++ b/files/etc/uci-defaults/mmx-web.init 2021-03-01 15:55:06.948726699 +0500
+@@ -89,4 +89,8 @@
+ uci set luci.template=internal
+ uci set luci.template.viewdir="/usr/lib/lua/5.1/luci/view/"
+ 
++#
++uci del_list uhttpd.main.lua_prefix='/cgi-bin/luci=/usr/lib/lua/luci/sgi/uhttpd.lua'
++uci add_list uhttpd.main.lua_prefix='/cgi-bin/luci=/usr/lib/lua/5.1/luci/sgi/uhttpd.lua'
++
+ uci commit

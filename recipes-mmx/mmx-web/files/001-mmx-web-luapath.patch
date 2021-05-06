@@ -1,0 +1,29 @@
+diff --git a/files/etc/uci-defaults/mmx-web.init b/files/etc/uci-defaults/mmx-web.init
+index bd47123..9b10ddb 100644
+--- a/files/etc/uci-defaults/mmx-web.init
++++ b/files/etc/uci-defaults/mmx-web.init
+@@ -68,18 +68,18 @@
+ ################################################################################
+ 
+ # apply patch to allow Luci login for MMX added users
+-if [ -e /usr/lib/lua/luci/controller/admin/index.lua -a -e /usr/lib/lua/mmx/mmx_admin_index.lua ]; then
+-    cp /usr/lib/lua/mmx/mmx_admin_index.lua /usr/lib/lua/luci/controller/admin/index.lua
++if [ -e /usr/lib/lua/5.1/luci/controller/admin/index.lua -a -e /usr/lib/lua/5.1/mmx/mmx_admin_index.lua ]; then
++    cp /usr/lib/lua/5.1/mmx/mmx_admin_index.lua /usr/lib/lua/5.1/luci/controller/admin/index.lua
+ fi
+ 
+ # apply patch to force Luci ignore tap interfaces
+-if [ -e /usr/lib/lua/luci/model/network.lua -a -e /usr/lib/lua/mmx/mmx-model-network.lua ]; then
+-    cp /usr/lib/lua/mmx/mmx-model-network.lua /usr/lib/lua/luci/model/network.lua
++if [ -e /usr/lib/lua/5.1/luci/model/network.lua -a -e /usr/lib/lua/5.1/mmx/mmx-model-network.lua ]; then
++    cp /usr/lib/lua/5.1/mmx/mmx-model-network.lua /usr/lib/lua/5.1/luci/model/network.lua
+ fi
+ 
+ # apply patch to use action type "call" in Luci
+-if [ -e /usr/lib/lua/luci/dispatcher.lua -a -e /usr/lib/lua/mmx/dispatcher.lua ]; then
+-    cp /usr/lib/lua/mmx/dispatcher.lua /usr/lib/lua/luci/dispatcher.lua
++if [ -e /usr/lib/lua/5.1/luci/dispatcher.lua -a -e /usr/lib/lua/5.1/mmx/dispatcher.lua ]; then
++    cp /usr/lib/lua/5.1/mmx/dispatcher.lua /usr/lib/lua/5.1/luci/dispatcher.lua
+ fi
+ 
+ # disable keepalive in uhttpd server
