@@ -71,7 +71,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 inherit ${@d.getVar('DISTRO', True) == 'rdk' and 'systemd' or 'base'}
 
-SRC_URI_append_rdk += " file://ubusd.service"
+SRC_URI_append_rdk += "\
+    file://ubusd.service \
+    file://0001-ubusd-convert-tx_queue-to-linked-list.patch \
+"
 
 SYSTEMD_SERVICE_${PN}_rdk = "ubusd.service"
 
