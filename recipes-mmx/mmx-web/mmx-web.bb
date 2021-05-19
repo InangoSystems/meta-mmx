@@ -78,8 +78,8 @@ DEPENDS = ""
 RDEPENDS_${PN} += "lua5.1 luci uhttpd ubus rpcd procd-base-files"
 
 PV = "2.0.1"
-SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=entrypoint_index_support"
-SRCREV = "8db51cda9cb04e5f0ce6e863c735f3cadae0e542"
+SRC_URI = "git://github.com/InangoSystems/feed-mmx.git;protocol=https;branch=mmx-as-luci-page"
+SRCREV = "6f13f10efabb99128c604be9272007f71349b061"
 
 SRC_URI += "\
     file://001-mmx-web-luapath.patch \
